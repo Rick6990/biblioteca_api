@@ -1,0 +1,49 @@
+version: '3.3'
+networks: 
+  ntpgsql:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.22.0.0/24
+services:
+  pgsql:
+    image: postgres:14
+    restart: unless-stopped
+    container_name: postgresql-its
+    volumes: 
+      - psdb-volume:/var/lib/postgresql/data
+    networks: 
+      ntpgsql:
+        ipv4_address: 172.22.0.2
+    ports:
+      - target: 5432
+        published: 5432
+        protocol: tcp
+        mode: host
+    environment:
+      - POSTGRES_PASSWORD=Its2025!
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: unless-stopped
+    container_name: pgadmin4
+#   user: root
+#    volumes:
+#      - type: bind
+#        source: ./dockervol
+#        target: /var/lib/pgadmin/storage/its2024-1
+    networks:
+      ntpgsql:
+        ipv4_address: 172.22.0.3
+    ports:
+      - target: 80
+        published: 81
+        protocol: tcp
+        mode: host
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=its@its.it
+      - PGADMIN_DEFAULT_PASSWORD=Its2025!
+
+volumes:
+  psdb-volume:
+
