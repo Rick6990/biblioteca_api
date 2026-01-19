@@ -5,6 +5,7 @@ from pkg.config.database import get_db
 from pkg.dto.prenotazione_dto import InsertPrenotazioneDto
 from pkg.repository.prenotazione_repo import PrenotazioneRepository
 from pkg.services.prenotazione_service import PrenotazioneService
+from pkg.services.email_sender import EmailSender
 
 
 router = APIRouter(
@@ -13,14 +14,18 @@ router = APIRouter(
     responses={404: {"description": "Not found"}}
 )
 
+send_email = EmailSender()
+
 @router.post("/add_reservation")
 def create_reservation(
     insert_reservation: InsertPrenotazioneDto,
-    db: Session = Depends(get_db)  # Inietta automaticamente
-):
+    db: Session = Depends(get_db) 
+):    
     repository = PrenotazioneRepository(session=db)
     service = PrenotazioneService(repository=repository)
+    send_email.send()
     return service.create_reservation(insert_reservation)
+
 
 @router.get("/all")
 def get_all(db: Session = Depends(get_db)):
@@ -47,7 +52,7 @@ def update_reservation_by_Id(id: uuid.UUID, user_updated: InsertPrenotazioneDto,
     utente = service.update_reservation(id, user_updated)
     
     if utente is None:
-        raise HTTPException(status_code=404, detail="Utente non trovato")
+        raise HTTPException(status_code=404, detail="Prenotazzione non trovata")
     return utente
 
 @router.delete("/delete/{id}")

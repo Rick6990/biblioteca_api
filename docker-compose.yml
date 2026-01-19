@@ -22,7 +22,7 @@ services:
         protocol: tcp
         mode: host
     environment:
-      - POSTGRES_PASSWORD=Its2025!
+      - POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
   pgadmin:
     image: dpage/pgadmin4
     restart: unless-stopped
@@ -41,8 +41,8 @@ services:
         protocol: tcp
         mode: host
     environment:
-      - PGADMIN_DEFAULT_EMAIL=its@its.it
-      - PGADMIN_DEFAULT_PASSWORD=Its2025!
+      - PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
 
 volumes:
   psdb-volume:

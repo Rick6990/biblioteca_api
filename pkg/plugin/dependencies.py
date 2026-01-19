@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from functools import lru_cache
-from pkg.config.database import get_postgres_connection
+from pkg.config.database import get_db
 from pkg.repository.libro_repo import LibroRepository
 from pkg.repository.prenotazione_repo import PrenotazioneRepository
 from pkg.repository.utente_repo import UtenteRepository
@@ -18,7 +18,7 @@ class ServiceDependencies:
 
 @lru_cache
 def get_services() -> ServiceDependencies:
-    database = get_postgres_connection()
+    database = get_db()
     user_repository = UtenteRepository(database)
     book_repository = LibroRepository(database)
     reservation_repository = PrenotazioneRepository(database)

@@ -11,18 +11,17 @@ env/
 ENV/
 .venv
 
-# IDE
+
 .vscode/
 .idea/
 *.swp
 *.swo
 
-# Database
 *.db
 *.sqlite3
 
-# File sensibili
 .env
+
 
 # Log
 *.log

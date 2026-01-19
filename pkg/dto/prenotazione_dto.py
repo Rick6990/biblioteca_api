@@ -8,6 +8,7 @@ class InsertPrenotazioneDto:
     utente_id : uuid.UUID
     libro_id: uuid.UUID
     giorni_prestito: int
+    
 
 @dataclass  
 class UpdatePrenotazioneDto:
@@ -21,6 +22,5 @@ class PrenotazioneDto:
     utente_id: uuid.UUID
     libro_id: uuid.UUID
     data_prenotazione : datetime
-    data_restituzione: datetime
     giorni_prestito: int
     stato: str
