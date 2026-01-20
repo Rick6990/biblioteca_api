@@ -13,6 +13,7 @@ class PrenotazioneService:
         reservation = insert_to_model(insert_reservation)
         self.repository.add(reservation)
         return model_to_dto(reservation)
+        
     
     def get_reservation_byId(self, reservation_id: UUID ) -> Optional[PrenotazioneDto]:
         reservation = self.repository.find_by_id(reservation_id)
@@ -22,7 +23,7 @@ class PrenotazioneService:
         return reservation
     
     def get_all_reservation(self) -> list[PrenotazioneDto]:
-        reservation = self.repository.find_all_reservation()
+        reservation = self.repository.find_all_reservation().sort()
         return reservation
     
     def update_reservation(self, reservation_id : UUID, reservation_updated : UpdatePrenotazioneDto) -> Optional[PrenotazioneDto]:
@@ -32,7 +33,6 @@ class PrenotazioneService:
             return None
         
         reservation.data_prenotazione = reservation_updated.data_prenotazione
-        reservation.data_restituzione = reservation_updated.data_restituzione
         reservation.stato = reservation_updated.stato
         
         self.repository.update_reservation(reservation)

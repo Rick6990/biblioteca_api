@@ -17,7 +17,6 @@ def model_to_dto(reservation: Prenotazione) -> PrenotazioneDto:
         utente_id = reservation.utente_id,
         libro_id = reservation.libro_id,
         data_prenotazione = reservation.data_prenotazione,
-        data_restituzione = reservation.data_restituzione,
         giorni_prestito=reservation.giorni_prestito,
         stato = reservation.stato
     )

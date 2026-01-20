@@ -13,7 +13,7 @@ class InsertPrenotazioneDto:
 @dataclass  
 class UpdatePrenotazioneDto:
     data_prenotazione : datetime
-    data_restituzione: datetime
+    giorni_prestito: int
     stato: str
     
 @dataclass

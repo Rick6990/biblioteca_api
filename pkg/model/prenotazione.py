@@ -11,7 +11,7 @@ class Prenotazione(Base):
     utente_id = Column(UUID(as_uuid=True), ForeignKey('utenti.id'), nullable=False)
     libro_id = Column(UUID(as_uuid=True), ForeignKey('libri.id'), nullable=False)
     data_prenotazione = Column(DateTime, server_default= func.now(), nullable=False)  
-    giorni_prestito = Column(Integer, nullable=False)
+    giorni_prestito = Column(Integer, default=1, nullable=False)
     stato = Column(String(20), default='RESERVE', nullable=False)
     
     utente = relationship("Utente", backref="prenotazioni")

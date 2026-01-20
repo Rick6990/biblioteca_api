@@ -9,8 +9,6 @@ class UtenteDto:
     id: uuid.UUID
     nome: str
     cognome: str
-    data: date
-    titololibro: str
     email: EmailStr
     
     
@@ -18,7 +16,5 @@ class UtenteDto:
 class InsertUtenteDto:
     nome: str
     cognome: str
-    data: date
-    titololibro: str
     email: EmailStr
     
