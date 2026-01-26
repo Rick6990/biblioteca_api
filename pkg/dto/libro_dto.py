@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from sqlalchemy import UUID
 
 
@@ -8,6 +8,8 @@ class LibroDto:
     titolo: str
     autore: str
     isbn: str
+    citazioni : list[str]    
+    
     
     
 @dataclass
@@ -15,3 +17,6 @@ class InsertLibroDto:
     titolo: str
     autore: str
     isbn: str
+    citazioni : list[str]    
+
+

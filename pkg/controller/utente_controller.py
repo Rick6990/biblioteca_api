@@ -9,7 +9,7 @@ from pkg.services.utente_service import UtenteService
 
 # Crea il router
 router = APIRouter(
-    prefix="/utenti",
+    prefix="/api/internal/users",
     tags=["Utenti"],
     responses={404: {"description": "Not found"}}
 )
@@ -19,7 +19,7 @@ router = APIRouter(
 def root(insert_user: InsertUtenteDto, deps: ServiceDependencies = Depends(get_services)):
     return deps.user_service.create_user(insert_user) """
     
-@router.post("/add")
+@router.post("/v1")
 def create_user(
     insert_user: InsertUtenteDto,
     db: Session = Depends(get_db)  # Inietta automaticamente
@@ -29,7 +29,7 @@ def create_user(
     return service.create_user(insert_user)
 
 
-@router.get("/{id}")
+@router.get("/{id}/v1")
 def get_byId(id:uuid.UUID, db: Session = Depends(get_db)):
     repository = UtenteRepository(session=db)
     service = UtenteService(repository=repository)
@@ -40,7 +40,7 @@ def get_byId(id:uuid.UUID, db: Session = Depends(get_db)):
     return utente
 
 
-@router.delete("/delete/{id}")
+@router.delete("/{id}/v1")
 def delete_by_user_Id (id: uuid.UUID, db:Session = Depends(get_db)):
     repository = UtenteRepository(session=db)
     service = UtenteService(repository=repository)
@@ -52,7 +52,7 @@ def delete_by_user_Id (id: uuid.UUID, db:Session = Depends(get_db)):
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
-@router.patch("/update/{id}")
+@router.patch("/{id}/v1")
 def update_user_by_Id(id: uuid.UUID, user_updated: InsertUtenteDto, db: Session = Depends(get_db)):
     repository = UtenteRepository(session=db)
     service = UtenteService(repository=repository)

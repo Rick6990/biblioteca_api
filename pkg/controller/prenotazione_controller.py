@@ -11,7 +11,7 @@ from pkg.services.utente_service import UtenteService
 
 
 router = APIRouter(
-    prefix="/prenotazioni",
+    prefix="/api/internal/reservation",
     tags=["Prenotazioni"],
     responses={404: {"description": "Not found"}}
 )
@@ -19,7 +19,7 @@ router = APIRouter(
 send_email = EmailSender()
 
 
-@router.post("/add_reservation")
+@router.post("/v1")
 def create_reservation(
     insert_reservation: InsertPrenotazioneDto,
     db: Session = Depends(get_db) 
@@ -32,13 +32,13 @@ def create_reservation(
     return service.create_reservation(insert_reservation)
 
 
-@router.get("/all")
+@router.get("/v1")
 def get_all(db: Session = Depends(get_db)):
     repository = PrenotazioneRepository(session=db)
     service = PrenotazioneService(repository=repository)
     return service.get_all_reservation()
 
-@router.get("/{id}")
+@router.get("/{id}/v1")
 def get_reservation_byId(id:uuid.UUID, db: Session = Depends(get_db)):
     repository = PrenotazioneRepository(session=db)
     service = PrenotazioneService(repository=repository)
@@ -49,7 +49,7 @@ def get_reservation_byId(id:uuid.UUID, db: Session = Depends(get_db)):
     return reservation_id
 
 
-@router.patch("/update/{id}")
+@router.patch("/{id}/v1")
 def update_reservation_by_Id(id: uuid.UUID, user_updated: InsertPrenotazioneDto, db: Session = Depends(get_db)):
     repository = PrenotazioneRepository(session=db)
     service = PrenotazioneService(repository=repository)
@@ -60,7 +60,7 @@ def update_reservation_by_Id(id: uuid.UUID, user_updated: InsertPrenotazioneDto,
         raise HTTPException(status_code=404, detail="ID Prenotazione non trovata")
     return update_reservation
 
-@router.delete("/delete/{id}")
+@router.delete("/{id}/v1")
 def delete_by_reservation_Id (id: uuid.UUID, db:Session = Depends(get_db)):
     repository = PrenotazioneRepository(session=db)
     service = PrenotazioneService(repository=repository)

@@ -1,6 +1,6 @@
 from pkg.config.database import engine, get_db
 from pkg.controller import libro_controller, prenotazione_controller, utente_controller
-from pkg.model import libro, prenotazione, utente 
+from pkg.model import libro, prenotazione, utente, citazioni
 from pkg.model.prenotazione import Base
 from fastapi import FastAPI
 

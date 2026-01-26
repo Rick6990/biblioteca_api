@@ -5,3 +5,4 @@ endif
 
 run-debug:
 	fastapi dev main.py
+

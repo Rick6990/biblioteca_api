@@ -1,3 +1,4 @@
+from sqlalchemy.orm import relationship
 import uuid
 from sqlalchemy import UUID, Column, String
 from pkg.config.database import Base
@@ -10,4 +11,4 @@ class Libro(Base):
     isbn = Column(String(20))
     
     
-
+    citazioni = relationship("Citazioni", back_populates="libro")

@@ -8,23 +8,23 @@ from pkg.services.libro_service import LibroService
 
 
 router = APIRouter(
-    prefix="/libri",
+    prefix="/api/internal/books",
     tags=["Libri"],
     responses={404: {"description": "Not found"}}
 )
-
+   
     
-@router.post("/add")
+@router.post("/v1")
 def create_book(
     insert_book: InsertLibroDto,
-    db: Session = Depends(get_db)  # Inietta automaticamente
+    db: Session = Depends(get_db)  
 ):
     repository = LibroRepository(session=db)
     service = LibroService(repository=repository)
     return service.create_book(insert_book)
 
 
-@router.get("/{id}")
+@router.get("/{id}/v1")
 def get_book_byId(id:uuid.UUID, db: Session = Depends(get_db)):
     repository = LibroRepository(session=db)
     service = LibroService(repository=repository)
@@ -35,7 +35,7 @@ def get_book_byId(id:uuid.UUID, db: Session = Depends(get_db)):
     return book
 
 
-@router.delete("/delete/{id}")
+@router.delete("/{id}/v1")
 def delete_by_book_Id (id: uuid.UUID, db:Session = Depends(get_db)):
     repository = LibroRepository(session=db)
     service = LibroService(repository=repository)
@@ -47,7 +47,7 @@ def delete_by_book_Id (id: uuid.UUID, db:Session = Depends(get_db)):
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
-@router.patch("/update/{id}")
+@router.patch("/{id}/v1")
 def update_book_by_Id(id: uuid.UUID, book_updated: InsertLibroDto, db: Session = Depends(get_db)):
     repository = LibroRepository(session=db)
     service = LibroService(repository=repository)
@@ -55,5 +55,5 @@ def update_book_by_Id(id: uuid.UUID, book_updated: InsertLibroDto, db: Session =
     book = service.update_book(id, book_updated)
     
     if book is None:
-        raise HTTPException(status_code=404, detail="Utente non trovato")
+        raise HTTPException(status_code=404, detail="Libro non trovato!")
     return book

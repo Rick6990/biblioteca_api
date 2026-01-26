@@ -15,6 +15,7 @@ class LibroService:
         self.repository.add(book)
         return model_to_dto(book)
     
+    
     def find_bookById (self,  book_id: UUID) -> LibroDto:
         book = self.repository.find_by_id(book_id)
         if book is None:
@@ -30,6 +31,7 @@ class LibroService:
         book.titolo = book_updated.titolo
         book.autore = book_updated.autore
         book.isbn = book_updated.isbn
+        book.citazioni = book_updated.citazioni
         self.repository.update_book(book)
         return model_to_dto(book)
          
